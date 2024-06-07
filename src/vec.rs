@@ -46,18 +46,21 @@ mod tests {
             },
         );
 
-        assert_eq!(vec![
-            Example {
-                name: "replaced".to_string(),
-                id: 3,
-                other_property: vec![1, 2],
-            },
-            Example {
-                name: "ua".to_string(),
-                id: 2,
-                other_property: vec![],
-            },
-        ], replaced_struct_vec);
+        assert_eq!(
+            vec![
+                Example {
+                    name: "replaced".to_string(),
+                    id: 3,
+                    other_property: vec![1, 2],
+                },
+                Example {
+                    name: "ua".to_string(),
+                    id: 2,
+                    other_property: vec![],
+                },
+            ],
+            replaced_struct_vec
+        );
     }
 
     #[test]
@@ -67,5 +70,42 @@ mod tests {
         case1.replace_mut(|item| *item == 2, 3);
 
         assert_eq!(vec![1, 3, 3, 4, 5], case1);
+
+        let mut case2_struct_case = vec![
+            Example {
+                name: "name1".to_string(),
+                id: 1,
+                other_property: vec![1, 2, 3],
+            },
+            Example {
+                name: "other".to_string(),
+                id: 2,
+                other_property: vec![3, 2, 4],
+            },
+        ];
+
+        case2_struct_case.replace_mut(
+            |item| item.name.as_str() == "other",
+            Example {
+                name: "other changed".to_string(),
+                id: 2,
+                other_property: vec![3, 2, 4],
+            },
+        );
+
+        let case_to_compare_struct = vec![
+            Example {
+                name: "name1".to_string(),
+                id: 1,
+                other_property: vec![1, 2, 3],
+            },
+            Example {
+                name: "other changed".to_string(),
+                id: 2,
+                other_property: vec![3, 2, 4],
+            },
+        ];
+
+        assert_eq!(case_to_compare_struct, case2_struct_case);
     }
 }
