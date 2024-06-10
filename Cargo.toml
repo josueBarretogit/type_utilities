@@ -5,3 +5,8 @@ edition = "2021"
 
 [dependencies]
 thiserror = "1.0.61"
+
+[features]
+strings = []
+vec = []
+bool = []

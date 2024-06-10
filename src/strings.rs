@@ -13,15 +13,43 @@ mod tests {
     }
 
     #[test]
+    fn to_snake_case() {
+        let case1 = String::from("this is the first case");
+
+        assert_eq!("this_is_the_first_case", case1.to_snake_case());
+
+        let case2 = String::from(" this is the   second case2  ");
+
+        assert_eq!("this_is_the_second_case2", case2.to_snake_case());
+    }
+
+    #[test]
     fn to_camel_case() {
         let case1 = String::from("this is the first case");
 
-        assert_eq!("this_is_the_first_case", case1.to_camel_case());
+        assert_eq!("thisIsTheFirstCase", case1.to_camel_case());
 
-        let case2 = String::from(" this is the   second case2");
+        let case2 = String::from(" this is the   second case2  ");
 
-        assert_eq!("this_is_the_second_case2", case2.to_camel_case());
+        assert_eq!("thisIsTheSecondCase2", case2.to_camel_case());
 
+        let case3 = String::from(" This is a third case 3");
+
+        assert_eq!("thisIsAThirdCase3", case3.to_camel_case());
     }
 
+    #[test]
+    fn to_pascal_case() {
+        let case1 = String::from("this is the first case");
+
+        assert_eq!("ThisIsTheFirstCase", case1.to_pascal_case());
+
+        let case2 = String::from(" this is the   second case2  ");
+
+        assert_eq!("ThisIsTheSecondCase2", case2.to_pascal_case());
+
+        let case3 = String::from(" This is a third case 3");
+
+        assert_eq!("ThisIsAThirdCase3", case3.to_pascal_case());
+    }
 }
