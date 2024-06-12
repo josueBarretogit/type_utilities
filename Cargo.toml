@@ -6,7 +6,10 @@ edition = "2021"
 [dependencies]
 thiserror = "1.0.61"
 
+[lib]
+doctest = false
+
 [features]
-strings = []
+string = []
 vec = []
 bool = []

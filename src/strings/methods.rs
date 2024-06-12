@@ -1,7 +1,7 @@
 use std::fmt::Write;
 
 pub trait RemoveWhitespaces {
-    /// As its name suggests removes all whitespaces of a string
+    /// Creates a new string that contains no whitespaces
     ///
     /// # Note to Implementors
     ///
@@ -9,8 +9,9 @@ pub trait RemoveWhitespaces {
     ///to pay the performance cost
     /// # Examples
     ///
-    /// ```
-    ///let case1 = String::from("first case ");
+    /// ```no_run
+    /// use crate::strings::methods::*;
+    /// let case1 = String::from("first case ");
     /// assert_eq!("firstcase", case1.remove_whitespaces());
     /// let case2 = String::from(" this is another test with normal  ");
     /// assert_eq!("thisisanothertestwithnormal", case2.remove_whitespaces());
@@ -18,21 +19,92 @@ pub trait RemoveWhitespaces {
     fn remove_whitespaces(&self) -> String;
 }
 
-pub trait CamelCase {
+pub trait ToCases {
+    /// Creates a new string in a `PascalCase` format
+    ///
+    /// # Examples
+    ///
+    ///
+    /// ```no_run
+    /// use crate::strings::methods::*;
+    /// let case1 = String::from("this is the first case");
+    ///
+    /// assert_eq!("thisIsTheFirstCase", case1.to_camel_case());
+    ///
+    /// let case2 = String::from(" this is the   second case2  ");
+    ///
+    /// assert_eq!("thisIsTheSecondCase2", case2.to_camel_case());
+    ///
+    /// let case3 = String::from(" This is a third case 3");
+    ///
+    /// assert_eq!("thisIsAThirdCase3", case3.to_camel_case());
+    ///```
+    fn to_pascal_case(&self) -> String;
+    /// Creates a new string in a `snake_case` format
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use crate::strings::methods::*;
+    /// let case1 = String::from("this is the first case");
+    ///
+    /// assert_eq!("this_is_the_first_case", case1.to_snake_case());
+    ///
+    /// let case2 = String::from(" this is the   second case2  ");
+    ///
+    /// assert_eq!("this_is_the_second_case2", case2.to_snake_case());
+    ///```
+    fn to_snake_case(&self) -> String;
+
+    /// Creates a new string in a `camelCased` format
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use crate::strings::methods::*;
+    /// let case1 = String::from("this is the first case");
+    ///
+    /// assert_eq!("this_is_the_first_case", case1.to_snake_case());
+    ///
+    /// let case2 = String::from(" this is the   second case2  ");
+    ///
+    /// assert_eq!("this_is_the_second_case2", case2.to_snake_case());
+    ///```
     fn to_camel_case(&self) -> String;
 }
 
-pub trait SnakeCase {
-    fn to_snake_case(&self) -> String;
+pub trait SelectNth {
+    /// Obtains the first character of a string
+    ///
+    /// # Examples
+    ///
+    ///
+    ///```no_run
+    /// use crate::strings::methods::SelectNth;
+    /// let case1 = String::from("obtain the first character");
+    /// assert_eq!("o", case1.first());
+    /// let case2 = String::from(" Obtain the first character");
+    /// assert_eq!(" ", case2.first());
+    ///```
+    ///
+    fn first(&self) -> String;
 }
 
-pub trait PascalCase {
-    fn to_pascal_case(&self) -> String;
+impl SelectNth for String {
+    fn first(&self) -> String {
+        self.chars().nth(0).unwrap_or_default().to_string()
+    }
+}
+
+impl SelectNth for &str {
+    fn first(&self) -> String {
+        self.chars().nth(0).unwrap_or_default().to_string()
+    }
 }
 
 impl RemoveWhitespaces for String {
     fn remove_whitespaces(&self) -> String {
-        let mut new_string_with_no_white_spaces = String::new();
+        let mut new_string_with_no_white_spaces = String::with_capacity(self.capacity());
         for character in self.chars() {
             if !character.is_whitespace() {
                 new_string_with_no_white_spaces.push(character);
@@ -42,42 +114,43 @@ impl RemoveWhitespaces for String {
     }
 }
 
-impl SnakeCase for String {
+impl ToCases for String {
     fn to_snake_case(&self) -> String {
-        let mut camel_cased = String::with_capacity(self.len());
+        let mut camel_cased = String::with_capacity(self.capacity());
         for word in self.split_whitespace() {
             camel_cased.push_str(format!("{word}_").as_str());
         }
         camel_cased.pop();
         camel_cased
     }
-}
 
-impl CamelCase for String {
     fn to_camel_case(&self) -> String {
         let mut words = self.split_whitespace();
 
         let firs_word = words.next().unwrap_or_default().to_lowercase();
 
-        let result = words.fold(String::new(), |mut output, current| {
-            let first_character = current.chars().nth(0).unwrap_or_default().to_uppercase();
-            let rest_word = &current[1..current.len()];
-            let _ = write!(output, "{first_character}{rest_word}");
-            output
-        });
-
-        format!("{firs_word}{result}")
-    }
-}
-
-impl PascalCase for String {
-    fn to_pascal_case(&self) -> String {
-        self.split_whitespace()
-            .fold(String::new(), |mut output, current| {
+        let result = words.fold(
+            String::with_capacity(self.capacity()),
+            |mut output, current| {
                 let first_character = current.chars().nth(0).unwrap_or_default().to_uppercase();
                 let rest_word = &current[1..current.len()];
                 let _ = write!(output, "{first_character}{rest_word}");
                 output
-            })
+            },
+        );
+
+        format!("{firs_word}{result}")
+    }
+
+    fn to_pascal_case(&self) -> String {
+        self.split_whitespace().fold(
+            String::with_capacity(self.capacity()),
+            |mut output, current| {
+                let first_character = current.first().to_uppercase();
+                let rest_word = &current[1..current.len()];
+                let _ = write!(output, "{first_character}{rest_word}");
+                output
+            },
+        )
     }
 }
