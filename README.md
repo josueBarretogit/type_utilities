@@ -1,5 +1,29 @@
 # Implementing methods / utilities for rust primitive types
+
 Please keep in mind that I am not a rust wizard and this methods may not be blazingly fast or may not follow the best practices
+
+# Installation
+
+Add this to your Cargo.toml
+
+```toml
+
+[dependencies]
+# if you want methods for a specific type then add them as a feature
+type_utilities = { version = "0.1.0", features = ["strings", "bool"] } 
+
+# features currently available:
+# strings, bool, vec
+
+```
+
+And bring the traits to scope like this: 
+
+```rust
+
+use type_utilities::strings::methods::*;
+
+```
 
 ## Strings
 
@@ -108,7 +132,6 @@ so far, for `bool` I have implemented:
 ```
 
 ## Vec
-
 
 so far, for `Vec<T> where T: PartialEq + Clone ` I have implemented:
 
