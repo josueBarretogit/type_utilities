@@ -13,7 +13,7 @@ Add this to your Cargo.toml
 type_utilities = { version = "0.1.0", features = ["strings", "bool"] } 
 
 # features currently available:
-strings, bool, vec
+# strings, bool, vec
 
 ```
 
