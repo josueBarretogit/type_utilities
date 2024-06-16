@@ -1,4 +1,5 @@
 # Implementing methods / utilities for rust primitive types
+Please keep in mind that I am not a rust wizard and this methods may not be blazingly fast or may not follow the best practices
 
 ## Strings
 
@@ -105,3 +106,10 @@ so far, for `bool` I have implemented:
         assert!(case1);
     }
 ```
+
+## Vec
+
+
+so far, for `Vec<T> where T: PartialEq + Clone ` I have implemented:
+
+[Implemented methods](./src/vec.rs)
