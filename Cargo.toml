@@ -2,6 +2,19 @@
 name = "type_utilities"
 version = "0.1.0"
 edition = "2021"
+authors = ["Josue <josuebarretogit@gmail.com>"]
+readme = "README.md"
+homepage = "https://github.com/josueBarretogit/type_utilities"
+repository = "https://github.com/josueBarretogit/type_utilities"
+description = "Implementing more methods to rust type primitives "
+keywords = ["utils", "utilities"]
+categories = ["utilities"]
+license = "MIT"
+include = [
+    "**/*.rs",
+    "Cargo.toml",
+]
+
 
 [dependencies]
 thiserror = "1.0.61"
@@ -10,6 +23,6 @@ thiserror = "1.0.61"
 doctest = false
 
 [features]
-string = []
+strings = []
 vec = []
 bool = []
