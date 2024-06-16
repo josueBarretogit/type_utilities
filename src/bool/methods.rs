@@ -15,6 +15,7 @@ pub trait Toggle {
     fn toggle(&mut self);
 }
 
+#[allow(clippy::inline_always)]
 impl Toggle for bool {
     #[inline(always)]
     fn toggle(&mut self) {

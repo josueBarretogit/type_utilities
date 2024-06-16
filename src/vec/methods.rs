@@ -126,11 +126,10 @@ where
     F: FnMut(&V) -> bool,
     V: PartialEq + Clone,
 {
-    fn replace(&self, searcher: F, value: V) -> Vec<V> 
-
-where
-    F: FnMut(&V) -> bool,
-    V: PartialEq + Clone,
+    fn replace(&self, searcher: F, value: V) -> Vec<V>
+    where
+        F: FnMut(&V) -> bool,
+        V: PartialEq + Clone,
     {
         let item = self.iter().position(searcher);
         match item {

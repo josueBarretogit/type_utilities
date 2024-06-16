@@ -132,7 +132,7 @@ impl ToCases for String {
         let result = words.fold(
             String::with_capacity(self.capacity()),
             |mut output, current| {
-                let first_character = current.chars().nth(0).unwrap_or_default().to_uppercase();
+                let first_character = current.first().to_uppercase();
                 let rest_word = &current[1..current.len()];
                 let _ = write!(output, "{first_character}{rest_word}");
                 output
