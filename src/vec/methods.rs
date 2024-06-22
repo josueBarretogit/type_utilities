@@ -207,3 +207,18 @@ impl<T> TrySplit<T> for Vec<T> {
         Some((left, right))
     }
 }
+
+impl<T> TrySplit<T> for [T] {
+    fn try_split_at(&self, mid: usize) -> Option<(&[T], &[T])> {
+        if mid > self.len() {
+            return None;
+        }
+
+        let (left, right) = self.split_at(mid);
+
+        if left.is_empty() || right.is_empty() {
+            return None;
+        }
+        Some((left, right))
+    }
+}

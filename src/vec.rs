@@ -128,5 +128,11 @@ mod tests {
 
         assert_eq!(option3, None);
 
+        let case2 = [1, 2, 3, 4, 5, 6];
+
+        let option4 = case2.try_split_at(3);
+
+        assert_eq!(option4, Some(([1,2,3].as_ref(), [4, 5,6].as_ref())));
+
     }
 }
