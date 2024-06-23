@@ -74,11 +74,11 @@ pub trait ToCases {
 }
 
 pub trait IsCases {
-    /// Check if `String` is has a `camelCasel` form
+    /// Check if `String` is has a `camelCase` form
     ///
     /// # Note to Implementors
     ///
-    /// The rules for a string to be `camelCase` are: 
+    /// The rules for a string to be `camelCase` are:
     /// - The `String` must not be `lower_case`
     /// - The first character must not be uppercase
     /// - There must not be whitespaces
@@ -108,8 +108,43 @@ pub trait IsCases {
     /// assert!(!case6.is_camel_case());
     ///```
     fn is_camel_case(&self) -> bool;
+
+    /// Check if `String` has a `PascalCase` form
+    ///
+    /// # Note to Implementors
+    ///
+    /// The rules for a string to be `PascalCase` are:
+    /// - The `String` must not be `lower_case`
+    /// - The first character must be uppercase
+    /// - There must not be whitespaces
+    /// - All characters must be `alphabetic`
+    ///
+    /// # Examples
+    ///```rust
+    /// use crate::strings::methods::IsCases;
+    /// let case1 = String::from("ThisIsPascalCase");
+    ///
+    /// assert!(case1.is_pascal_case());
+    ///
+    /// let case2 = String::from("thisisNotPascalCase");
+    ///
+    /// assert!(!case2.is_pascal_case());
+    ///
+    /// let case3 = String::from("this isnot_pascal_case");
+    ///
+    /// assert!(!case3.is_pascal_case());
+    ///
+    /// let case4 = String::from("this#isnotPascalcase");
+    ///
+    /// assert!(!case4.is_pascal_case());
+    ///
+    /// let case5 = String::from("thisIs%&notpascalcase");
+    /// assert!(!case5.is_pascal_case());
+    ///
+    /// let case6 = String::from("thisisnotpascalcase");
+    /// assert!(!case6.is_pascal_case());
+    ///````
     fn is_pascal_case(&self) -> bool;
-    fn is_snake_case(&self) -> bool;
 }
 
 pub trait SelectNth {
@@ -194,6 +229,8 @@ impl ToCases for String {
     }
 }
 
+
+
 impl IsCases for String {
     fn is_camel_case(&self) -> bool {
         if *self == self.to_lowercase() {
@@ -210,10 +247,18 @@ impl IsCases for String {
         true
     }
 
-    fn is_snake_case(&self) -> bool {
-        true
-    }
     fn is_pascal_case(&self) -> bool {
+        if *self == self.to_lowercase() {
+            return false;
+        }
+        if self.first() != self.first().to_uppercase() {
+            return false;
+        }
+
+        if self.contains(|ch: char| !ch.is_alphabetic()) {
+            return false;
+        }
+
         true
     }
 }

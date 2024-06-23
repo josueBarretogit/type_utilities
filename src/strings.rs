@@ -3,6 +3,7 @@ pub mod methods;
 #[cfg(test)]
 mod tests {
 
+
     #[test]
     fn string_remove_whitespaces() {
         use crate::strings::methods::RemoveWhitespaces;
@@ -81,6 +82,34 @@ mod tests {
 
         let case6 = String::from("thisisnotcamelcase");
         assert!(!case6.is_camel_case());
+
+    }
+
+    #[test]
+    fn  is_pascal_case_works() {
+
+        use crate::strings::methods::IsCases;
+        let case1 = String::from("ThisIsPascalCase");
+
+        assert!(case1.is_pascal_case());
+
+        let case2 = String::from("thisisNotPascalCase");
+
+        assert!(!case2.is_pascal_case());
+
+        let case3 = String::from("this isnot_pascal_case");
+
+        assert!(!case3.is_pascal_case());
+
+        let case4 = String::from("this#isnotPascalcase");
+
+        assert!(!case4.is_pascal_case());
+
+        let case5 = String::from("thisIs%&notpascalcase");
+        assert!(!case5.is_pascal_case());
+
+        let case6 = String::from("thisisnotpascalcase");
+        assert!(!case6.is_pascal_case());
 
     }
 
