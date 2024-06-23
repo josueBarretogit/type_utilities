@@ -12,8 +12,12 @@ Add this to your Cargo.toml
 # if you want methods for a specific type then add them as a feature
 type_utilities = { version = "0.1.0", features = ["strings", "bool"] } 
 
+# if you want all methods available for all types then add
+
+type_utilities = { version = "0.1.1", features = ["all_types"] } 
+
 # features currently available:
-# strings, bool, vec
+# strings, bool, vec, "result", "option"
 
 ```
 
@@ -24,6 +28,13 @@ And bring the traits to scope like this:
 use type_utilities::strings::methods::*;
 
 ```
+
+# Types
+- [Strings](#Strings)
+- [Result](#Result)
+- [Option](#Option)
+- [bool](#Bool)
+- [vec](#Vec)
 
 ## Strings
 
@@ -131,8 +142,62 @@ so far, for `bool` I have implemented:
     }
 ```
 
+## Result
+
+so far, for `Result<T, E>` I have implemented:
+
+`result.filter()`
+
+## Examples 
+```rust
+
+    use crate::result::methods::Filter;
+    let case1 = "2".parse::<i32>();
+    let case1 = case1.filter(|nu| *nu > 1);
+    assert_eq!(case1, Ok(&2));
+
+    let case2 = "err".parse::<i32>();
+    let case2 = case2.filter(|nu| *nu < 10);
+
+    match case2 {
+        Ok(_) => {},
+        Err(e) => {
+            assert!(e.is_some());
+        },
+    };
+
+    let case3 = "10".parse::<i32>();
+    let case3 = case3.filter(|nu| *nu > 20);
+
+    match case3 {
+        Ok(_) => {},
+        Err(e) => assert!(e.is_none())
+    };
+
+
+```
+
+
 ## Vec
 
 so far, for `Vec<T> where T: PartialEq + Clone ` I have implemented:
 
 [Implemented methods](./src/vec.rs)
+
+## Option
+
+so far, for `Option<T>` I have implemented:
+
+`option.is_none_and()`
+
+## Examples 
+
+```rust
+    use crate::option::methods::IsNone;
+    let case1 = Some(1);
+    assert!(!case1.is_none_and(|| true));
+    let case2 : Option<i32> = None;
+    assert!(case2.is_none_and(|| case1.is_some()));
+
+```
+

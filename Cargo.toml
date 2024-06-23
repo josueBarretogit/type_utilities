@@ -1,6 +1,6 @@
 [package]
 name = "type_utilities"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 authors = ["Josue <josuebarretogit@gmail.com>"]
 readme = "README.md"
@@ -17,12 +17,14 @@ include = [
 
 
 [dependencies]
-thiserror = "1.0.61"
 
 [lib]
 doctest = false
 
 [features]
+all_types = ["strings", "vec", "bool", "option", "result"]
 strings = []
 vec = []
 bool = []
+option = []
+result = []

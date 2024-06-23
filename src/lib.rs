@@ -8,3 +8,9 @@ pub mod vec;
 
 #[cfg(feature = "bool")]
 pub mod bool;
+
+#[cfg(feature = "option")]
+pub mod option;
+
+#[cfg(feature = "result")]
+pub mod result;
