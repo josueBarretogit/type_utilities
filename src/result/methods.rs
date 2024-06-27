@@ -1,8 +1,4 @@
 pub trait Filter<T, E> {
-    #[deprecated(
-        since = "0.1.1",
-        note = "This method should consume Self so the api will change"
-    )]
     /// This method returns:
     ///
     /// `Ok(&t)` if Result is the `Ok` variant and `predicate` returns `true`
