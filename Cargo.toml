@@ -28,3 +28,7 @@ vec = []
 bool = []
 option = []
 result = []
+
+[package.metadata.docs.rs]
+all-features = true
+rustdoc-args = ["--cfg", "docsrs"]

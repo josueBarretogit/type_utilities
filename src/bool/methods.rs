@@ -1,23 +1,28 @@
 pub trait Toggle {
-    /// Inverts the value of the variable, if it is true then self will become false and viceversa
+    /// Inverts the value of `bool`, if it is true then `Self` will become false and viceversa
     ///
     /// # Examples
-    /// ```no_run
+    ///
+    /// ```
     /// let mut case1 = true;
     ///
     /// case1 = !case;
     ///
-    /// //instead call:
+    /// // instead call:
+    ///
     /// case1.toggle()
+    ///
     /// ```
     /// Similar to `vec.is_empty()` this could be considered a more idiomatic way of
+    ///
     /// inverting the value of a boolean
     fn toggle(&mut self);
 }
 
-/// This trait is intended for negative assertions
+/// This trait declares negative or opossite, already existing methods
 pub trait Not {
     /// This is the opossite of `then`
+    ///
     /// Returns `Some(f())` if the `bool` is [`false`]
     /// or `None` otherwise.
     ///
@@ -34,10 +39,11 @@ pub trait Not {
     /// assert_eq!(case2.not_then(|| 1), None);
     /// ```
     fn not_then<T, F: FnOnce() -> T>(self, f: F) -> Option<T>;
-
     /// This is the opossite of `then_some`
+    ///
     /// Returns `Some(t)` if the `bool` is false, otherwise return `None`
     /// # Examples
+    ///
     /// ```
     /// use crate::bool::methods::Not;
     /// let case1 = false;
