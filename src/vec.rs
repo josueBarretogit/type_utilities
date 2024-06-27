@@ -1,3 +1,4 @@
+//! This modules contains the trait that define new methods for `Vec<T>` and `[T]`
 pub mod methods;
 
 #[cfg(test)]
@@ -121,7 +122,7 @@ mod tests {
 
         let option2 = case1.try_split_at(3);
 
-        assert_eq!(option2, Some(([1,2,3].as_ref(), [4, 5,6].as_ref())));
+        assert_eq!(option2, Some(([1, 2, 3].as_ref(), [4, 5, 6].as_ref())));
 
         // In this case the left side is empty
         let option3 = case1.try_split_at(0);
@@ -132,7 +133,6 @@ mod tests {
 
         let option4 = case2.try_split_at(3);
 
-        assert_eq!(option4, Some(([1,2,3].as_ref(), [4, 5,6].as_ref())));
-
+        assert_eq!(option4, Some(([1, 2, 3].as_ref(), [4, 5, 6].as_ref())));
     }
 }

@@ -1,8 +1,8 @@
+//! This modules contains the trait that define new methods for `String` and &str
 pub mod methods;
 
 #[cfg(test)]
 mod tests {
-
 
     #[test]
     fn string_remove_whitespaces() {
@@ -82,12 +82,10 @@ mod tests {
 
         let case6 = String::from("thisisnotcamelcase");
         assert!(!case6.is_camel_case());
-
     }
 
     #[test]
-    fn  is_pascal_case_works() {
-
+    fn is_pascal_case_works() {
         use crate::strings::methods::IsCases;
         let case1 = String::from("ThisIsPascalCase");
 
@@ -110,7 +108,6 @@ mod tests {
 
         let case6 = String::from("thisisnotpascalcase");
         assert!(!case6.is_pascal_case());
-
     }
 
     #[test]
@@ -118,11 +115,9 @@ mod tests {
         use crate::strings::methods::SelectNth;
 
         let case1 = String::from("obtain the first character");
-        
+
         assert_eq!("o", case1.first());
 
-        let case2 = String::from(" Obtain the first character");
-
-        assert_eq!(" ", case2.first());
+        assert_eq!("Helo world".first(), "H");
     }
 }

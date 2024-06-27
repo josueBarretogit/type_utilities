@@ -7,13 +7,16 @@ pub trait Filter<T, E> {
     ///
     /// This method returns:
     ///
-    /// `Err(None)` if `Result` is the `Ok` variant and `predicate` returns `false`
+    /// `Err(None)` if `Result` is the `Ok` variant and `predicate` returns `false` or
+    ///
     /// `Err(Some(&e))` if `Result` is the `Err` variant
     ///
     /// # Examples
-    /// ```rust
+    ///
+    /// ```
     ///
     /// use crate::result::methods::Filter;
+    ///
     /// let case1 = "2".parse::<i32>();
     /// let case1 = binding.filter(|nu| *nu > 1);
     /// assert_eq!(case1, Ok(&2));

@@ -5,20 +5,24 @@ pub trait RemoveWhitespaces {
     ///
     /// # Note to Implementors
     ///
-    ///This implementation creates a new string so don't use this unless you are willing
-    ///to pay the performance cost
     /// # Examples
     ///
     /// ```no_run
     /// use crate::strings::methods::*;
+    ///
     /// let case1 = String::from("first case ");
+    ///
     /// assert_eq!("firstcase", case1.remove_whitespaces());
-    /// let case2 = String::from(" this is another test with normal  ");
+    ///
+    /// let case2 = String::from(" this is another test with more whitespaces  ");
+    ///
     /// assert_eq!("thisisanothertestwithnormal", case2.remove_whitespaces());
     ///```
     fn remove_whitespaces(&self) -> String;
 }
 
+/// Declares methods for converting strings to different cases such as pascal case or
+/// camel case
 pub trait ToCases {
     /// Creates a new string in a `PascalCase` format
     ///
@@ -44,7 +48,7 @@ pub trait ToCases {
     ///
     /// # Examples
     ///
-    /// ```no_run
+    /// ```
     /// use crate::strings::methods::*;
     /// let case1 = String::from("this is the first case");
     ///
@@ -74,7 +78,7 @@ pub trait ToCases {
 }
 
 pub trait IsCases {
-    /// Check if `String` is has a `camelCase` form
+    /// Check if `String` is of `camelCase` form
     ///
     /// # Note to Implementors
     ///
@@ -85,8 +89,8 @@ pub trait IsCases {
     /// - All characters must be `alphabetic`
     ///
     /// # Examples
-    ///```rust
     ///
+    ///```
     /// use crate::strings::methods::IsCases;
     /// let case1 = String::from("thisIsCamelCase");
     ///
@@ -109,7 +113,7 @@ pub trait IsCases {
     ///```
     fn is_camel_case(&self) -> bool;
 
-    /// Check if `String` has a `PascalCase` form
+    /// Check if `String` is of a `PascalCase` form
     ///
     /// # Note to Implementors
     ///
@@ -120,7 +124,7 @@ pub trait IsCases {
     /// - All characters must be `alphabetic`
     ///
     /// # Examples
-    ///```rust
+    ///```
     /// use crate::strings::methods::IsCases;
     /// let case1 = String::from("ThisIsPascalCase");
     ///
@@ -147,18 +151,21 @@ pub trait IsCases {
     fn is_pascal_case(&self) -> bool;
 }
 
+/// Declares methods for obtaining part of a string at a certain position
 pub trait SelectNth {
     /// Obtains the first character of a string
     ///
     /// # Examples
     ///
     ///
-    ///```no_run
+    ///```
     /// use crate::strings::methods::SelectNth;
+    ///
     /// let case1 = String::from("obtain the first character");
+    ///
     /// assert_eq!("o", case1.first());
-    /// let case2 = String::from(" Obtain the first character");
-    /// assert_eq!(" ", case2.first());
+    ///
+    /// assert_eq!("Helo world", case2.first());
     ///```
     ///
     fn first(&self) -> String;
@@ -228,8 +235,6 @@ impl ToCases for String {
         )
     }
 }
-
-
 
 impl IsCases for String {
     fn is_camel_case(&self) -> bool {
