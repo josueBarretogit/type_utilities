@@ -26,3 +26,5 @@ pub mod option;
 
 #[cfg(feature = "result")]
 pub mod result;
+
+pub mod hashmap;

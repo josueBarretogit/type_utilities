@@ -18,6 +18,7 @@ mod tests {
         let case1 = vec![1, 3, 4, 5];
 
         let replaced_vec = case1.replace(|item| *item == 3, 4);
+    
 
         assert_eq!(vec![1, 4, 4, 5], replaced_vec);
 

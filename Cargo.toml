@@ -22,12 +22,14 @@ include = [
 doctest = false
 
 [features]
-all_types = ["strings", "vec", "bool", "option", "result"]
+all_types = ["strings", "vec", "bool", "option", "result", "hashmap"]
+default = ["hashmap"]
 strings = []
 vec = []
 bool = []
 option = []
 result = []
+hashmap = []
 
 [package.metadata.docs.rs]
 all-features = true
