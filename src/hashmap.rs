@@ -1,39 +1,62 @@
 //! This modules contains traits that define new methods for `Hashmap<T, V>`
 
 use std::collections::HashMap;
-use std::hash::Hasher;
-pub trait SetOperation<K, V> {
+use std::hash::{BuildHasher, Hash};
+pub trait SetOperation<K, V, S> {
     /// Returns the elements representing the union,
-    /// i.e., all the elements that are in self and other without duplicates `self` and `other`,
-    /// in ascending order.
+    /// i.e., all the elements that are in `self` and `other` without duplicates
     ///
     /// # Examples
     ///
     /// ```
-    /// use std::collections::BTreeSet;
+    /// use crate::hashmap::SetOperation;
     ///
-    /// let mut a = BTreeSet::new();
-    /// a.insert(1);
-    /// a.insert(2);
+    /// let a = HashMap::from([("a", 2), ("b", 1), ("d", 3)]);
+    /// let b = HashMap::from([("a", 2), ("b", 1), ("c", 4)]);
     ///
-    /// let mut b = BTreeSet::new();
-    /// b.insert(2);
-    /// b.insert(3);
+    /// let union_hashmap = a.union(&b);
     ///
-    /// let intersection: Vec<_> = a.intersection(&b).cloned().collect();
-    /// assert_eq!(intersection, [2]);
+    /// assert_eq!(
+    ///  HashMap::from([("a", 2), ("b", 1), ("c", 4), ("d", 3)]),
+    ///  union_hashmap
+    /// );
+    ///
+    /// let c = HashMap::from([("a", 2), ("b", 1), ("c", 3)]);
+    /// let d = HashMap::from([("d", 2), ("f", 1), ("d", 3)]);
+    ///
+    /// let union_hashmap2 = c.union(&d);
+    ///
+    /// assert_eq!(
+    ///  HashMap::from([("a", 2), ("b", 1), ("c", 3), ("d", 2), ("f", 1), ("d", 3)]),
+    ///  union_hashmap2
+    /// );
+    ///
     /// ```
-    fn union(&self, other: HashMap<K, V>) -> HashMap<K, V>
+    fn union(&self, other: &HashMap<K, V>) -> HashMap<K, V>
     where
-        K: Eq;
+        K: Eq + PartialEq + Hash + Clone,
+        V: Eq + PartialEq + Clone,
+        S: BuildHasher;
 }
 
-impl<K, V, S> SetOperation<K, V> for HashMap<K, V, S> {
-    fn union(&self, other:  HashMap<K, V>) -> HashMap<K, V>
+impl<K, V, S> SetOperation<K, V, S> for HashMap<K, V, S> {
+    fn union(&self, other: &HashMap<K, V>) -> HashMap<K, V>
     where
-        K: Eq,
+        K: Eq + PartialEq + Hash + Clone,
+        V: Eq + PartialEq + Clone,
+        S: BuildHasher,
     {
-        other
+        let mut union_result: HashMap<K, V> = HashMap::new();
+
+        for (key, value) in self {
+            union_result.insert(key.clone(), value.clone());
+        }
+
+        for (key, value) in other {
+            union_result.entry(key.clone()).or_insert(value.clone());
+        }
+
+        union_result
     }
 }
 
@@ -45,9 +68,24 @@ mod test {
     fn union_works() {
         use crate::hashmap::SetOperation;
 
-        let hash1 = HashMap::from([("a", 2), ("b", 1), ("d", 3)]);
-        let hash2 = HashMap::from([("a", 2), ("c", 4), ("b", 1)]);
+        let a = HashMap::from([("a", 2), ("b", 1), ("d", 3)]);
+        let b = HashMap::from([("a", 2), ("b", 1), ("c", 4)]);
 
-        assert_eq!(HashMap::from([("a", 2), ("b", 1), ("c", 4), ("d", 3)]), hash1.union(hash2));
+        let union_hashmap = a.union(&b);
+
+        assert_eq!(
+            HashMap::from([("a", 2), ("b", 1), ("c", 4), ("d", 3)]),
+            union_hashmap
+        );
+
+        let c = HashMap::from([("a", 2), ("b", 1), ("c", 3) , ("d", 2)]);
+        let d = HashMap::from([("d", 2), ("f", 1), ("d", 3)]);
+
+        let union_hashmap2 = c.union(&d);
+
+        assert_eq!(
+            HashMap::from([("a", 2), ("b", 1), ("c", 3), ("d", 2), ("f", 1), ("d", 3)]),
+            union_hashmap2
+        );
     }
 }
